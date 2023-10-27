@@ -13,6 +13,11 @@ public class PetController {
     @Autowired
     private PetService petService;
 
+    @GetMapping("/hi")
+    public String sayHi() {
+        return "hi";
+    }
+
     @GetMapping
     public List<Pet> allPet() {
         return petService.allPets();
