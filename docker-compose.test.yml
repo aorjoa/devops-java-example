@@ -1,0 +1,26 @@
+#file: noinspection YAMLSchemaValidation
+version: '3.8'
+
+networks:
+  integration-test-example:
+
+services:
+  it_test:
+    image: amazoncorretto:17.0.9-alpine3.18
+    volumes:
+      - $PWD:/app
+    working_dir: /app
+    networks:
+      - integration-test-example
+    command: ["./gradlew","clean","integrationTest"]
+  db:
+    image: postgres:16.0
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: petstore
+    restart: on-failure
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+    networks:
+      - integration-test-example
