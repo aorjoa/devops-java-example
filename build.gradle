@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.postgresql:postgresql:42.6.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.testcontainers:testcontainers:1.19.1'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -60,8 +61,12 @@ tasks.register('integrationTest', Test) {
 }
 
 tasks.named('test') {
+	filter {
+		exclude '**/*IntegrationTest.*'
+	}
 	// to prevent Mockito's inline mock maker fail on container
 	jvmArgs('-Djdk.attach.allowAttachSelf=true', '-XX:+StartAttachListener')
+
 	useJUnitPlatform()
 }
 
