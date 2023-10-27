@@ -12,6 +12,10 @@ jobs:
   quality-check:
     name: Quality Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - uses: actions/checkout@v4
         with:
@@ -51,6 +55,7 @@ jobs:
           java-version: 17
 
       - uses: actions/checkout@v4
+
       - name: Unit test outside Docker-compose
         run: ./gradlew test
 
